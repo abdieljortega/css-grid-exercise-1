@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movi.es</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            height: 100%;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .header {
+            width: 100%;
+            position: fixed;
+            z-index: 1;
+        }
+        .navbar {
+            background-color: white;
+            padding: 20px 20px 10px;
+            box-shadow: 96px -2px 8px #888
+        }
+        .navbar__list {
+            display: grid;
+            align-content: flex-start;
+            grid-template-columns: 300px repeat(5, 1fr) 100px repeat(2, 1fr);
+            grid-template-areas: "logo . . right right right right right right";
+            margin: 0;
+        }
+        .navbar__list--item:nth-child(1) {
+            display: flex;
+            grid-area: logo;
+        }
+        .navbar__list--item:nth-child(2) {
+            grid-area: right;
+        }
+        .navbar__list--item:nth-child(3) {
+            grid-area: user;
+        }
+        .navbar__right {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header__img {
+            max-width: 65px;
+        }
+        .input__search {
+            background-color: white;
+            border: #A8A7AF solid 1px;
+            border-radius: 8px;
+            padding: 5px 10px;
+            height: 23px;
+            width: 400px;
+        }
+        .profile {
+            color: #394247;
+            display: flex;
+            align-items: center;
+        }
+        .profile__name {
+            font-size: 20px;
+            margin: 10px;
+        }
+        .profile__avatar {
+            width: 60px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+        .profile__more {
+            height: 0;
+            width: 0;
+            border-top: #35424B solid 13px;
+            border-left: transparent solid 5px;
+            border-right: transparent solid 5px;
+        }
+        .frontal-bar {
+            margin-top: 98px;
+            width: 100px;
+            background-image: linear-gradient(to right, #FC5465, #FA736F);
+            padding-top: 40px;
+            height: 100%;
+            position: fixed;
+        }
+        .frontal-bar__list-item {
+            width: 100px;
+            display: grid;
+            grid-template-rows: repeat(8, 1fr);
+            grid-gap: 20px;
+            align-content: center;
+            grid-template-areas: "home"
+                                 "trending"
+                                 "more-likes"
+                                 "."
+                                 "."
+                                 "."
+                                 "."
+                                 "settings";
+        }
+        .frontal-bar__list-item--item {
+            justify-content: center;
+            text-align: center;
+        }
+        .frontal-bar__list-item--item:nth-child(1) {
+            grid-area: home;
+        }
+        .frontal-bar__list-item--item:nth-child(2) {
+            grid-area: trending;
+        }
+        .frontal-bar__list-item--item:nth-child(3) {
+            grid-area: more-likes;
+        }
+        .frontal-bar__list-item--item:nth-child(4) {
+            grid-area: settings;
+        }
+        .frontal-bar__list-item--item a {
+            text-decoration: none;
+        }
+        .item__img {
+            width: 50px;
+        }
+        .item__text {
+            margin-top: 5px;
+            color: #FFFAFF;
+            font-weight: bold;
+        }
+        .main {
+            margin-left: 130px;
+            padding-top: 98px;
+        }
+        .carousel {
+            padding-top: 30px;
+        }
+        .carousel__title {
+            margin-top: 0;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .carousel__list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 30px;
+            justify-content: center;
+        }
+        .video {
+            margin: 0;
+            position: relative;
+            min-width: 300px;
+            max-height: 230px;
+            box-shadow: 1px 2px 3px #888;
+        }
+        .video__img {
+            width: 100%;
+            height: 230px;
+        }
+        .video__content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 86, 93, .7);
+            color: #f2f2f2;
+            padding: 10px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box; 
+        }
+        .video__content--title {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        .video__content--description {
+            margin: 0;
+            font-size: 12px;
+        }
+        @media screen and (max-height: 670px) {
+            .frontal-bar__list-item {
+            grid-template-rows: repeat(5, 1fr);
+            grid-template-areas: "home"
+                                 "trending"
+                                 "more-likes"
+                                 "."
+                                 "settings";
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="navbar__list">
+                <li class="navbar__list--item">
+                    <img class="header__img" src="react.png" alt="">
+                    <h1>Movie.es</h1>
+                </li>
+                <li class="navbar__list--item">
+                    <div class="navbar__right">
+                        <div class="navbar__right--search">
+                            <input 
+                                placeholder="Busca tu peli, actor, actriz o director favortio" 
+                                type="text" 
+                                class="input__search"
+                            >
+                        </div>
+                        <div class="profile">
+                            <p class="profile__name">Abdiel Ortega</p>
+                            <img class="profile__avatar" src="perfil.jpg" alt="">
+                            <div class="profile__more"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="frontal-bar">
+            <ul class="frontal-bar__list-item">
+                <li class="frontal-bar__list-item--item">
+                    <a href="" class="item__home">
+                        <img class="item__img" src="react.png" alt="">
+                        <p class="item__text">Home</p>
+                    </a>
+                </li>
+                <li class="frontal-bar__list-item--item">
+                    <a href="" class="item__trending">
+                        <img class="item__img" src="react.png" alt="">
+                        <p class="item__text">Trendings</p>
+                    </a>
+                </li>
+                <li class="frontal-bar__list-item--item">
+                    <a href="" class="item__more-likes">
+                        <img class="item__img" src="react.png" alt="">
+                        <p class="item__text">More likes</p>
+                    </a>
+                </li>
+                <li class="frontal-bar__list-item--item">
+                    <a href="" class="item__settings">
+                        <img class="item__img" src="react.png" alt="">
+                        <p class="item__text">Settings</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="carousel">
+
+                <h2 class="carousel__title">Ahora en el cine</h1>
+
+                <div class="carousel__list">
+                    <figure class="video">
+                        <img class="video__img" src="anakin.jpg" alt="">
+                        <figcaption class="video__content">
+                            <h2 class="video__content--title">The secret life of pets</h2>
+                            <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                        </figcaption>
+                    </figure>
+    
+                    <figure class="video">
+                        <img class="video__img" src="anakin.jpg" alt="">
+                        <figcaption class="video__content">
+                            <h2 class="video__content--title">The secret life of pets</h2>
+                            <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                        </figcaption>
+                    </figure>
+    
+                    <figure class="video">
+                        <img class="video__img" src="anakin.jpg" alt="">
+                        <figcaption class="video__content">
+                            <h2 class="video__content--title">The secret life of pets</h2>
+                            <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <h2 class="carousel__title">Aclamadas por la critica</h1>
+
+                    <div class="carousel__list">
+                        <figure class="video">
+                            <img class="video__img" src="anakin.jpg" alt="">
+                            <figcaption class="video__content">
+                                <h2 class="video__content--title">The secret life of pets</h2>
+                                <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                            </figcaption>
+                        </figure>
+        
+                        <figure class="video">
+                            <img class="video__img" src="anakin.jpg" alt="">
+                            <figcaption class="video__content">
+                                <h2 class="video__content--title">The secret life of pets</h2>
+                                <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                            </figcaption>
+                        </figure>
+        
+                        <figure class="video">
+                            <img class="video__img" src="anakin.jpg" alt="">
+                            <figcaption class="video__content">
+                                <h2 class="video__content--title">The secret life of pets</h2>
+                                <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <h2 class="carousel__title">No te debes perder</h1>
+
+                        <div class="carousel__list">
+                            <figure class="video">
+                                <img class="video__img" src="anakin.jpg" alt="">
+                                <figcaption class="video__content">
+                                    <h2 class="video__content--title">The secret life of pets</h2>
+                                    <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                                </figcaption>
+                            </figure>
+            
+                            <figure class="video">
+                                <img class="video__img" src="anakin.jpg" alt="">
+                                <figcaption class="video__content">
+                                    <h2 class="video__content--title">The secret life of pets</h2>
+                                    <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                                </figcaption>
+                            </figure>
+            
+                            <figure class="video">
+                                <img class="video__img" src="anakin.jpg" alt="">
+                                <figcaption class="video__content">
+                                    <h2 class="video__content--title">The secret life of pets</h2>
+                                    <p class="video__content--description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque sit illum nihil laboriosam accusantium modi neque debitis</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                
+            </div>
+        </div>
+    </main>
+</body>
+</html>
